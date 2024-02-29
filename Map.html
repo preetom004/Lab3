@@ -11,21 +11,26 @@
     <style>
         #map { height: 500px; }
     </style>
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- OverlappingMarkerSpiderfier JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
+    <!-- Flatpickr JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Custom JavaScript -->
+    <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
 </head>
 <body>
+    <script src="script.js"></script>
     <div id="map"></div>
     <div id="search-container">
         <input type="text" id="date-range-picker" placeholder="Select date range">
         <button id="search-btn">Search</button>
     </div>
 
-    <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <!-- OverlappingMarkerSpiderfier JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-overlapping-marker-spiderfier/dist/leaflet-oms.js"></script>
-    <!-- Flatpickr JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <!-- Custom JavaScript -->
-    <script src="script.js"></script>
+
+    
 </body>
 </html>

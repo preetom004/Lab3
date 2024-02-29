@@ -17,7 +17,12 @@ document.addEventListener("DOMContentLoaded", function() {
     //var layer = new L.StamenTileLayer('watercolor');
     //map.addLayer(layer);
 
-    // Initialize OverlappingMarkerSpiderfier
+    var cluster = L.markerClusterGroup({
+        spiderfyOnMaxZoom: true,
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: true, 
+        spiderfyDistanceMultiplier: 2     
+    });
     var oms = new OverlappingMarkerSpiderfier(map);
 
     // Define custom pop-up content function
@@ -27,7 +32,14 @@ document.addEventListener("DOMContentLoaded", function() {
                            "<p><strong>Contractor Name:</strong> " + feature.properties.contractorname + "</p>" +
                            "<p><strong>Community Name:</strong> " + feature.properties.communityname + "</p>" +
                            "<p><strong>Original Address:</strong> " + feature.properties.originaladdress + "</p>";
+        
+        latlong = feature.geometry.coordinates
+        if(latlong[0] | latlong [1]){  //If latlong exists
+            temp_marker = new L.marker([latlong[1], latlong[0]]).addTo(cluster);    
+            oms.addMarker(temp_marker)
+        }
         layer.bindPopup(popupContent);
+        // oms.addMarker(new L.Marker(new L.LatLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0])))
     }
 
     // Handle search button click event
@@ -39,23 +51,34 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                L.geoJSON(data, {
+                const geojsonData =  L.geoJSON(data, {
                     onEachFeature: onEachFeature // Call onEachFeature for each feature
-                }).addTo(oms); // Add markers to OverlappingMarkerSpiderfier
+                }); // Add markers to OverlappingMarkerSpiderfier
+                for (var key in geojsonData._layers){
+                    coord = geojsonData._layers[key]['feature']['geometry']['coordinates'];
+        
+                    for (let i = 0; i < coord.length; i++)  {
+        
+                        var latlong = coord[i] 
+                        var popCont = geojsonData._layers[key]['_popup']['_content'];  
+        
+                        if(latlong[0] | latlong [1]){  //If latlong exists
+                            temp_marker = L.marker([latlong[1], latlong[0]], {icon: red_icon}).bindPopup(popCont).addTo(cluster);    
+                            oms.addMarker(temp_marker)
+                        }
+                    }        
+                }
             })
             .catch(error => console.error('Error fetching data:', error));
     });
 
-    // Add listener for marker clicks
-    var popup = new L.Popup();
-    oms.addListener('click', function(marker) {
-        popup.setContent(marker.desc);
-        popup.setLatLng(marker.getLatLng());
-        map.openPopup(popup);
-    });
+    cluster.addTo(map); 
+    
+        
+        //Add Cluster Layer to Map so that user can interact with it
+        
 
-    // Add listener for spiderfy event
-    oms.addListener('spiderfy', function(markers) {
-        map.closePopup();
-    });
+        //Add to layer control
+        // control.addOverlay(cluster,"Building Permits");
+
 });
