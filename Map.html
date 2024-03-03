@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calgary Building Permits Map</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        #map { 
+            height: 800px; /* Adjust height as needed */
+            margin-bottom: 20px;
+        }
+        #search-container {
+            text-align: center;
+        }
+        #date-range-picker {
+            width: 80%;
+            max-width: 300px; /* Adjust max-width as needed */
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        #search-btn {
+            width: 80%;
+            max-width: 200px; /* Adjust max-width as needed */
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        /* Media queries for mobile responsiveness */
+        @media (max-width: 768px) {
+            #map {
+                height: 300px; /* Adjust height for smaller screens */
+            }
+            #date-range-picker, #search-btn {
+                width: 100%;
+                max-width: none;
+            }
+        }
+    </style>
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- OverlappingMarkerSpiderfier JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
+    <!-- Flatpickr JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Custom JavaScript -->
+    <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+</head>
+<body>
+    <script src="script.js"></script>
+    <div id="map"></div>
+    <div id="search-container">
+        <input type="text" id="date-range-picker" placeholder="Select date range">
+        <button id="search-btn">Search</button>
+    </div>
+</body>
+</html>
