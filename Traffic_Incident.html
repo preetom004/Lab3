@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map with Toggleable Layer</title>
+    <!-- Include Mapbox GL JS CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
+    <style>
+        /* Style for the map container */
+        #map {
+            height: 800px; /* Set default map height */
+            width: 100%; /* Set default map width */
+        }
+
+        /* Responsive styling */
+        @media screen and (max-width: 768px) {
+            #map {
+                height: 300px; /* Adjust map height for smaller screens */
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            #map {
+                height: 200px; /* Adjust map height for even smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <button id="toggle-layer">Toggle Traffic Incidents</button>
+
+    <!-- Include Mapbox GL JS library -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
+    <script>
+        // Replace 'pk.your_access_token' with your actual Mapbox access token
+        mapboxgl.accessToken = 'pk.eyJ1IjoicHJlZXRvbS1tb3p1bWRlciIsImEiOiJjbHRobDd0dmQwNXJxMmttZHY1NmFiOHNiIn0.fxEVWgM1OcoVh9gcMrcHYQ';
+
+        const map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/preetom-mozumder/clthmgk4500yj01o82cez8mul', // Your Mapbox style URL
+          zoom: 10.48,
+          center: [-114.0766, 51.0667] // Your initial center coordinates
+        });
+
+        const toggleButton = document.getElementById('toggle-layer');
+
+        // Function to toggle layer visibility
+        function toggleLayer() {
+          const mapLayers = map.getStyle().layers;
+          const trafficLayer = mapLayers.find(layer => layer.id.startsWith('traffic-incidents')); // Search for layer starting with 'traffic-incidents'
+          if (trafficLayer) {
+            const visibility = (map.getLayoutProperty(trafficLayer.id, 'visibility') === 'visible') ? 'none' : 'visible';
+            map.setLayoutProperty(trafficLayer.id, 'visibility', visibility);
+          } else {
+            console.error('Traffic incidents layer not found in the map style.');
+          }
+        }
+
+        // Add event listener to toggle button
+        toggleButton.addEventListener('click', toggleLayer);
+    </script>
+</body>
+</html>
